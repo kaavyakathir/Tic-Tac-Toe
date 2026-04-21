@@ -1,5 +1,9 @@
 public class TicTacToe {
 
+    static boolean isHumanTurn;
+    static char humanSymbol;
+    static char computerSymbol;
+
     public static void main(String[] args) {
 
         char[][] board = new char[3][3];
@@ -18,5 +22,38 @@ public class TicTacToe {
             }
             System.out.println();
         }
+
+        // UC2
+        tossAndAssignSymbols();
+        displayTossResult();
+    }
+
+    static void tossAndAssignSymbols() {
+        java.util.Random random = new java.util.Random();
+
+        int toss = random.nextInt(2);
+
+        if (toss == 0) {
+            isHumanTurn = true;
+            humanSymbol = 'X';
+            computerSymbol = 'O';
+        } else {
+            isHumanTurn = false;
+            humanSymbol = 'O';
+            computerSymbol = 'X';
+        }
+    }
+
+    static void displayTossResult() {
+        System.out.println("=== Toss Result ===");
+
+        if (isHumanTurn) {
+            System.out.println("Human plays first.");
+        } else {
+            System.out.println("Computer plays first.");
+        }
+
+        System.out.println("Human Symbol: " + humanSymbol);
+        System.out.println("Computer Symbol: " + computerSymbol);
     }
 }
