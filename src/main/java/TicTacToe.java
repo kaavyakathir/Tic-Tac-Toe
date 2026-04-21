@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class TicTacToe {
 
@@ -17,25 +18,44 @@ public class TicTacToe {
             }
         }
 
-        // Print board
+        // Display initial board
+        printBoard(board);
+
+        // UC2: Toss
+        tossAndAssignSymbols();
+        displayTossResult();
+
+        // UC3: Get user input
+        int slot = getUserSlot();
+        System.out.println("Slot entered: " + slot);
+
+        // UC4: Convert slot to row & column
+        int[] position = convertSlotToPosition(slot);
+        int row = position[0];
+        int col = position[1];
+
+        System.out.println("Row: " + row + ", Column: " + col);
+
+        // Place symbol
+        board[row][col] = humanSymbol;
+
+        // Display updated board
+        printBoard(board);
+    }
+
+    // UC1: Print Board
+    static void printBoard(char[][] board) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 System.out.print(board[i][j] + " ");
             }
             System.out.println();
         }
-
-        // UC2
-        tossAndAssignSymbols();
-        displayTossResult();
-
-        // UC3
-        int slot = getUserSlot();
-        System.out.println("Slot entered: " + slot);
     }
 
+    // UC2: Toss
     static void tossAndAssignSymbols() {
-        java.util.Random random = new java.util.Random();
+        Random random = new Random();
 
         int toss = random.nextInt(2);
 
@@ -63,7 +83,7 @@ public class TicTacToe {
         System.out.println("Computer Symbol: " + computerSymbol);
     }
 
-    // UC3 METHOD
+    // UC3: Input
     static int getUserSlot() {
         Scanner scanner = new Scanner(System.in);
 
@@ -71,5 +91,13 @@ public class TicTacToe {
         int slot = scanner.nextInt();
 
         return slot;
+    }
+
+    // UC4: Convert slot → row & column
+    static int[] convertSlotToPosition(int slot) {
+        int row = (slot - 1) / 3;
+        int col = (slot - 1) % 3;
+
+        return new int[]{row, col};
     }
 }
