@@ -18,32 +18,34 @@ public class TicTacToe {
             }
         }
 
-        // Display initial board
         printBoard(board);
 
-        // UC2: Toss
+        // UC2
         tossAndAssignSymbols();
         displayTossResult();
 
-        // UC3: Get user input
-        int slot = getUserSlot();
-        System.out.println("Slot entered: " + slot);
+        // UC3 + UC4 + UC5 combined
+        while (true) {
+            int slot = getUserSlot();
 
-        // UC4: Convert slot to row & column
-        int[] position = convertSlotToPosition(slot);
-        int row = position[0];
-        int col = position[1];
+            int[] position = convertSlotToPosition(slot);
+            int row = position[0];
+            int col = position[1];
 
-        System.out.println("Row: " + row + ", Column: " + col);
+            // UC5 validation
+            if (isValidMove(board, row, col)) {
+                board[row][col] = humanSymbol;
+                break; // valid move → exit loop
+            } else {
+                System.out.println("Invalid move! Try again.");
+            }
+        }
 
-        // Place symbol
-        board[row][col] = humanSymbol;
-
-        // Display updated board
+        // Show updated board
         printBoard(board);
     }
 
-    // UC1: Print Board
+    // Print Board
     static void printBoard(char[][] board) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -88,16 +90,29 @@ public class TicTacToe {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter slot number (1-9): ");
-        int slot = scanner.nextInt();
-
-        return slot;
+        return scanner.nextInt();
     }
 
-    // UC4: Convert slot → row & column
+    // UC4: Convert slot
     static int[] convertSlotToPosition(int slot) {
         int row = (slot - 1) / 3;
         int col = (slot - 1) % 3;
-
         return new int[]{row, col};
+    }
+
+    // UC5: Validate move
+    static boolean isValidMove(char[][] board, int row, int col) {
+
+        // Check bounds
+        if (row < 0 || row > 2 || col < 0 || col > 2) {
+            return false;
+        }
+
+        // Check if cell is empty
+        if (board[row][col] != '-') {
+            return false;
+        }
+
+        return true;
     }
 }
