@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class TicTacToe {
 
     static boolean isHumanTurn;
@@ -26,6 +28,10 @@ public class TicTacToe {
         // UC2
         tossAndAssignSymbols();
         displayTossResult();
+
+        // UC3
+        int slot = getUserSlot();
+        System.out.println("Slot entered: " + slot);
     }
 
     static void tossAndAssignSymbols() {
@@ -55,5 +61,15 @@ public class TicTacToe {
 
         System.out.println("Human Symbol: " + humanSymbol);
         System.out.println("Computer Symbol: " + computerSymbol);
+    }
+
+    // UC3 METHOD
+    static int getUserSlot() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter slot number (1-9): ");
+        int slot = scanner.nextInt();
+
+        return slot;
     }
 }
